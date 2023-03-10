@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>Formulario GET</title>
+</head>
+<body>
+    <form action="/guardar-formulario" method="POST">
+        <div classname="MasterContainer">
+            <div classname="InputContainer">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" required>
+            </div>
+            <div classname="InputContainer">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div classname="InputContainer">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" name="telefono" id="telefono" required>
+            </div>
+            <div classname="InputContainer">
+                <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" required>
+            </div>
+            
+            <div classname="InputContainer">
+                <button type="submit">Enviar</button>
+            </div>
+        </div>
+       
+    </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+.MasterContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.InputContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.InputContainer label {
+    margin-right: 10px;
+    width: 120px;
+    text-align: right;
+}
+
+.InputContainer input {
+    flex: 1;
+}
