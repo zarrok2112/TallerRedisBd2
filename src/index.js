@@ -7,6 +7,7 @@ const { Entity, Schema } = require('redis')
 const client = createClient({
   host: "127.0.0.1",
   port: 6379,
+  legacyMode: true
 });
 
 const app = express();
@@ -34,7 +35,27 @@ app.post("/guardar-formulario", (req, res) => {
 
   res.send("Holi")
   console.log("Holi")
+
+  
+
+  console.log(info);
 });
+
+app.post("/buscar", (req,res) => {
+  const {email} = req.body;
+
+  client.GET(email, (err, reply) => {
+    if(err){
+      console.log("el error fue papu: " + err);
+    }else{
+      console.log(JSON.parse(reply));
+      
+    }
+  })
+  res.send("holi")
+  
+  
+})
 
 app.get("/character", async (req, res) => {
   client.get("/character", async (err, reply) => {
@@ -44,7 +65,9 @@ app.get("/character", async (req, res) => {
     }
   });
 
-  const response = await axios.get("https://rickandmortyapi.com/api/character");
+  const response = await axios.get(
+    "https://rickandmortyapi.com/api/character"
+    );
 
   client.set("character", JSON.stringify(response.data), (err, reply) => {
     if (err) console.log(err);
@@ -53,6 +76,8 @@ app.get("/character", async (req, res) => {
 
     res.json(response.data);
   });
+
+  res.send("hola")
 });
 
 app.listen(3000);
