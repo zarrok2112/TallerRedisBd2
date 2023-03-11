@@ -13,6 +13,8 @@ const client = createClient({
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 (async () => {
   await client.connect();
@@ -33,29 +35,30 @@ app.post("/guardar-formulario", (req, res) => {
 
   client.set(email,JSON.stringify(insert));
 
-  res.send("Holi")
-  console.log("Holi")
-
-  
-
-  console.log(info);
+  res.redirect('/')
 });
 
-app.post("/buscar", (req,res) => {
-  const {email} = req.body;
+app.post("/buscar", (req, res) => {
+  const { email } = req.body;
 
   client.GET(email, (err, reply) => {
-    if(err){
+    if (err) {
       console.log("el error fue papu: " + err);
-    }else{
-      console.log(JSON.parse(reply));
-      
+      res.status(500).json({ error: "Ocurrió un error en el servidor" });
+    } else {
+      const jsonResponse = JSON.parse(reply);
+      console.log(jsonResponse);
+      if (Array.isArray(jsonResponse) && jsonResponse.length > 0) {
+        const { name, phone, fechaNacimiento } = jsonResponse[0];
+        console.log(name, phone, fechaNacimiento);
+        res.render("buscar", { email, nombre: name, telefono: phone, fechaNacimiento });
+      } else {
+        console.log("La respuesta no contiene un objeto JSON válido");
+        res.status(404).json({ error: "No se encontraron resultados" });
+      }
     }
-  })
-  res.send("holi")
-  
-  
-})
+  });
+});
 
 app.get("/character", async (req, res) => {
   client.get("/character", async (err, reply) => {
